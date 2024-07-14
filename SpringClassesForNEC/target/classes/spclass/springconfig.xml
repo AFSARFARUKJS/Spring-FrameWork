@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- <beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:util="http://www.springframework.org/schema/util" xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd"> -->
+        
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:mvc="http://www.springframework.org/schema/mvc" 
+        xmlns="http://www.springframework.org/schema/beans"
+        xmlns:jee="http://www.springframework.org/schema/jee"
+        xmlns:aop= "http://www.springframework.org/schema/aop"
+        xmlns:tx= "http://www.springframework.org/schema/tx"
+        xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+        xsi:schemaLocation="
+                http://www.springframework.org/schema/mvc 
+                http://www.springframework.org/schema/mvc/spring-mvc.xsd 
+                http://www.springframework.org/schema/jee   
+                http://www.springframework.org/schema/jee/spring-jee-3.1.xsd
+                http://www.springframework.org/schema/beans
+                http://www.springframework.org/schema/beans/spring-beans.xsd
+                http://www.springframework.org/schema/aop
+                http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
+                http://www.springframework.org/schema/tx
+                http://www.springframework.org/schema/tx/spring-tx-2.0.xsd
+                http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
+                ">
+   
+   
+   <tx:annotation-driven transaction-manager="sp3"></tx:annotation-driven>
+        
+<bean id="s1" class="spclass.Book">
+	<!-- <property name="book_id" value="book-1"></property> -->
+	<property name="book_name" value="The Complete reference of Java"></property>
+	<property name="author" value="Herbert Schildt"></property>
+</bean>
+
+<bean id="s2" class="spclass.Library">
+	<property name="lib_name" value="NEC Library"></property>
+	<property name="lib_id" value="lib-1"></property>	
+	<property name="b" ref="s1"></property>
+</bean>
+
+<bean id="s3" class="spclass.QuestionAndAnswer">
+	<property name="qid" value="q-1"></property>
+	<property name="qname" value="Expand WWW"></property>
+	<property name="ans">
+		<list>
+			<value>World Wide Web</value>
+			<value>Wide Web World</value>
+			<value>World Web Wide</value>
+			<value>Web Wide World</value>
+		</list>
+	</property>
+</bean>
+
+<bean id="s4" class="spclass.SetterWithMap">
+	<property name="m">
+		<map>
+			<entry key="Roll No" value="st-1"></entry>
+			<entry key="Name" value="abc"></entry>
+			<entry key="Email ID" value="abc@gmail.com"></entry>
+		</map>
+	</property>
+</bean>
+
+<bean id="c1" class="spclass.Product">
+	<constructor-arg value="P-1"></constructor-arg>
+	<constructor-arg value="Laptop"></constructor-arg>
+	<constructor-arg value="Electronics"></constructor-arg>
+	<constructor-arg value="35000.00"></constructor-arg>
+</bean>
+
+
+<bean id="c2" class="spclass.Customer">
+	<constructor-arg value="C-1"></constructor-arg>
+	<constructor-arg value="abc"></constructor-arg>
+	<constructor-arg ref="c1"></constructor-arg>
+</bean>
+
+<bean id="c3" class="spclass.QuestionAndAnswer1">
+	<constructor-arg value="q-1"></constructor-arg>
+	<constructor-arg value="Founder of Hibernate"></constructor-arg>
+	<constructor-arg>
+		<list>
+			<value>Gavin King</value>
+			<value>Bjorne Stroustrap</value>
+			<value>Guido Van Rossum</value>
+			<value>Pattrik Naughton</value>
+		</list>
+	</constructor-arg>
+</bean>
+
+<bean id="c4" class="spclass.ConWithMap">
+	<constructor-arg>
+		<map>
+			<entry key="Name" value="abc"></entry>
+			<entry key="Salary" value="35000.00"></entry>
+			<entry key="Category" value="Production"></entry>
+		</map>
+	</constructor-arg>
+</bean>
+
+
+<bean id="sp1" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+	<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"></property>
+	<property name="url" value="jdbc:oracle:thin:@localhost:1521:xe"></property>
+	<property name="username" value="nandha"></property>
+	<property name="password" value="nandha"></property>
+</bean>
+
+<bean id="sp2" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+	<property name="dataSource" ref="sp1"></property>
+	<property name="mappingResources">
+		<list>
+			<value>spclass/nandha.hbm.xml</value>
+		</list>
+	</property>
+	<property name="hibernateProperties">
+		<props>
+			<prop key="hibernate.hbm2ddl.auto">update</prop>
+			<prop key="hibernate.dialect">org.hibernate.dialect.OracleDialect</prop>
+		</props>
+	</property>
+</bean>
+
+<bean id="sp3" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+	<property name="sessionFactory" ref="sp2"></property>
+</bean>
+
+<bean id="sp4" class="org.springframework.orm.hibernate5.HibernateTemplate">
+	<property name="sessionFactory" ref="sp2"></property>
+</bean>
+
+<bean id="sp5" class="spclass.NandhaDAO">
+	<property name="template" ref="sp4"/>
+</bean>
+
+
+</beans>

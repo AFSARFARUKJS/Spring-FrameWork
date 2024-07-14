@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+    
+    <hibernate-mapping>
+    
+ <class name="SprWithHyp.Department" table="department">
+ 	<id name="dept_id" column="deptid" length="30" type="string">
+ 		<generator class="assigned"></generator>
+ 	</id>
+ 	<property name="dept_name" column="deptname" length="100" type="string"></property>
+ 	<property name="dept_head" column="depthead" length="150" type="string"></property>
+ </class>
+ 
+ </hibernate-mapping>
